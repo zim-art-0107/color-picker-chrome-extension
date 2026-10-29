@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    body {
+      width: 320px;
+      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #333;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #e0e0e0;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ccc;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .header img {
+      width: 36px;
+      height: 36px;
+      margin-right: 12px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #2d3436;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .picker-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    #picker {
+      flex: 1;
+      padding: 12px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    }
+
+    #picker:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+    }
+
+    #picker:active {
+      transform: translateY(0);
+    }
+
+    #manual-picker-container {
+      position: relative;
+      width: 46px;
+    }
+
+    #manual-picker {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .manual-btn {
+      width: 100%;
+      height: 46px;
+      background: #fff;
+      border: 2px solid #f0f0f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b2bec3;
+      transition: all 0.2s;
+    }
+
+    .manual-btn:hover {
+      border-color: #a29bfe;
+      color: #6c5ce7;
+    }
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 13px;
+      color: #b2bec3;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    #history {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #f5f6fa;
+      transition: all 0.2s;
+    }
+
+    .history-item:hover {
+      border-color: #e0e0e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateX(2px);
+    }
+
+    .swatch-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .color-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      justify-content: center;
+    }
+
+    .color-hex {
+      font-weight: 600;
+      font-size: 14px;
+      color: #2d3436;
+      letter-spacing: 0.5px;
+    }
+
+    .color-name {
+      font-size: 11px;
+      color: #636e72;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .history-item:hover .actions {
+      opacity: 1;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #b2bec3;
+      padding: 6px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: #f5f6fa;
+      color: #2d3436;
+    }
+
+    .icon-btn.delete:hover {
+      background: #ffeaa7;
+      color: #e17055;
+    }
+
+    .icon-btn.copy:hover {
+      background: #dff9fb;
+      color: #00b894;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <img src="icon48.png" alt="Logo">
+    <h1>Color Picker</h1>
+  </div>
+
+  <div class="picker-row">
+    <button id="picker" style="flex: 1;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path
+          d="M12 2.69l5.74 5.74c.98.98.98 2.58 0 3.56l-9.06 9.06a3.98 3.98 0 0 1-2.9 1.15H3.5a.5.5 0 0 1-.5-.5V19a4 4 0 0 1 1-1.33l9.06-9.06c.98-.98 2.58-.98 3.56 0z" />
+        <path d="M14 7l3 3" />
+      </svg>
+      Pick a Color
+    </button>
+    <div id="manual-picker-container" title="Manual Basic Picker">
+      <div class="manual-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      </div>
+      <input type="color" id="manual-picker" value="#007bff">
+    </div>
+  </div>
+  <div id="history"></div>
+  <script src="popup.js"></script>
+</body>
+
+</html>
